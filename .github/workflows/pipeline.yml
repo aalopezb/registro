@@ -33,25 +33,16 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
         with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Login to Heroku
-        uses: actions/heroku@v3
-        with:
-          email: karenchicaiza989@gmail.com
-          api_key: HRKU-b9f549bb-15d1-43c2-aa1d-190613e4552a
-
+          fetch-depth: 0
       - name: Deploy to Heroku
-        run: |
-          heroku git:remote -a registroweb
-          git push heroku main
+        if: ${{ github.event_name == 'push' }}
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: HRKU-0a0a621b-738e-4966-99fe-ac1fc231aac3
+          heroku_app_name: registrar
+          heroku_email: karenchicaiza989@gmail.com
+          healthcheck: "https://registrar-8fd9d36c1caa.herokuapp.com/"
+          rollbackonhealthcheckfailed: true

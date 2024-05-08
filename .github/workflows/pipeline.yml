@@ -31,10 +31,7 @@ jobs:
           php-version: '7.4'
           extensions: mysqli
 
-  
-  
   deploy:
- 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

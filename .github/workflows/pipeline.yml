@@ -17,29 +17,24 @@ jobs:
         with:
           access_token: ${{ github.token }}
 
-    build:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest  
+  
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2  
         with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v2
+          fetch-depth: 0  
+  
+      - name: Install PHP and extensions
+        uses: shivammathur/setup-php@v2  
         with:
-          cache: 'npm'
-          node-version: '14'
-      - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build
-      - uses: actions/upload-artifact@v2
-        with:
-          name: dist
-          path: dist
+          php-version: '7.4'
+          extensions: mysqli
 
   
   
   deploy:
-    needs: [test, e2e]
+ 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
